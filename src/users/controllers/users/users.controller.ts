@@ -1,40 +1,24 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Query } from '@nestjs/common';
+import { Request, Response } from 'express';
+import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
 
 @Controller('users')
 export class UsersController {
   @Get()
-  getUsers() {
-    return [{ username: 'Varuna', email: 'Varunanda@akash.com' }];
+  getUsers(@Query('sortBy') sortBy: string) {
+    console.log(sortBy);
+    return [{ username: 'varuna', email: 'varunanda.com' }];
   }
 
-  @Get('posts')
-  getUserPosts() {
-    return [
-      {
-        username: 'Varuna',
-        email: 'Varunanda@akash.com',
-        posts: [
-          {
-            id: 1,
-            title: 'post 1',
-          },
-          {
-            id: 2,
-            title: 'post 1',
-          },
-        ],
-      },
-    ];
+  @Post()
+  createUser(@Body() userData: CreateUserDto) {
+    console.log(userData);
+    return {};
   }
 
-  @Get('posts/comments')
-  getUserComments() {
-    return [
-      {
-        id: 1,
-        title: 'Post 1',
-        comments: [],
-      },
-    ];
+  @Get(':id')
+  getUserById(@Param('id') id: string) {
+    console.log(id);
+    return { id };
   }
 }
